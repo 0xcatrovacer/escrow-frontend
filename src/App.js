@@ -18,16 +18,19 @@ import {
     SolflareWalletAdapter,
     TorusWalletAdapter,
 } from "@solana/wallet-adapter-wallets";
-import { clusterApiUrl, Connection } from "@solana/web3.js";
-import { AnchorProvider } from "@project-serum/anchor";
+import { clusterApiUrl, Connection, PublicKey } from "@solana/web3.js";
+import { AnchorProvider, Program } from "@project-serum/anchor";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+
 import HomePage from "./pages/HomePage";
 import ListingsPage from "./pages/ListingsPage";
+import idl from "./idls/idl.json";
 
 require("@solana/wallet-adapter-react-ui/styles.css");
 
 const networkUrl = "https://api.devnet.solana.com";
 
+const programID = new PublicKey(idl.metadata.address);
 const network = WalletAdapterNetwork.Devnet;
 const opts = {
     preflightCommitment: "processed",
@@ -51,11 +54,14 @@ function App() {
     };
 
     const callFn = () => {
-        const provider = getProvider();
-
         try {
+            const provider = getProvider();
+
+            const program = new Program(idl, programID, provider);
             setProvider(provider);
             console.log(provider);
+            setProgram(program);
+            console.log(program);
         } catch (e) {
             console.log(e);
         }
