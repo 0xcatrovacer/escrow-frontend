@@ -8,6 +8,7 @@ import {
 } from "@solana/wallet-adapter-react-ui";
 import {
     ConnectionProvider,
+    useWallet,
     WalletProvider,
 } from "@solana/wallet-adapter-react";
 import {
@@ -33,18 +34,19 @@ const opts = {
 };
 
 function App() {
-    const [web3Program, setProgram] = useState("null");
-    const [web3Provider, setProvider] = useState("null");
-
+    const [web3Program, setProgram] = useState(null);
+    const [web3Provider, setProvider] = useState(null);
+    const [newConnection, setConnection] = useState(null);
+    const [publicKey, setPublicKey] = useState(null);
     const getProvider = () => {
         const connection = new Connection(networkUrl);
-
         const provider = new AnchorProvider(
             connection,
             window.solana,
             opts.preflightCommitment
         );
 
+        setConnection(connection);
         return provider;
     };
 
@@ -61,7 +63,7 @@ function App() {
 
     useEffect(() => {
         callFn();
-    }, []);
+    }, [publicKey]);
 
     const endpoint = useMemo(() => clusterApiUrl(network), [network]);
 
@@ -97,7 +99,15 @@ function App() {
                 <Navbar />
                 <BrowserRouter>
                     <Routes>
-                        <Route path="/" element={<HomePage />} />
+                        <Route
+                            path="/"
+                            element={
+                                <HomePage
+                                    setPublicKey={setPublicKey}
+                                    connection={newConnection}
+                                />
+                            }
+                        />
                         <Route path="/listings" element={<ListingsPage />} />
                     </Routes>
                 </BrowserRouter>
