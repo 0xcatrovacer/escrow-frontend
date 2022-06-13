@@ -12,7 +12,7 @@ function HomePage({ setPublicKey, connection }) {
         setPublicKey(publicKey);
     });
 
-    const [selectedNft, setSelectedNft] = useState({});
+    const [selectedNft, setSelectedNft] = useState(null);
     return (
         <div className="homepage">
             <HomeNfts
