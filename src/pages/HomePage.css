@@ -121,3 +121,10 @@
     border: 3px solid #0059e9;
     cursor: pointer;
 }
+
+.no-nft-selected {
+    text-align: center;
+    margin-top: 10vh;
+    font-size: 2.7vh;
+    color: rgb(94, 94, 94);
+}
