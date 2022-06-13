@@ -19,6 +19,9 @@ import {
 } from "@solana/wallet-adapter-wallets";
 import { clusterApiUrl, Connection } from "@solana/web3.js";
 import { AnchorProvider } from "@project-serum/anchor";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import ListingsPage from "./pages/ListingsPage";
 
 require("@solana/wallet-adapter-react-ui/styles.css");
 
@@ -76,7 +79,7 @@ function App() {
     const Navbar = () => {
         return (
             <div className="navbar-div">
-                <div className="navbar-text">Xypher P2P</div>
+                <div className="navbar-text">P2P NFTs</div>
                 <div className="navbar-routes">
                     <span>Home</span>
                     <span>My Listings</span>
@@ -92,6 +95,12 @@ function App() {
         <ConnectionProvider endpoint={endpoint}>
             <WalletProvider wallets={wallets} autoConnect>
                 <Navbar />
+                <BrowserRouter>
+                    <Routes>
+                        <Route path="/" element={<HomePage />} />
+                        <Route path="/listings" element={<ListingsPage />} />
+                    </Routes>
+                </BrowserRouter>
                 {/* Rest of the code */}
             </WalletProvider>
         </ConnectionProvider>
