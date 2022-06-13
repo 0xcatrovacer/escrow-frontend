@@ -73,12 +73,25 @@ function App() {
         [network]
     );
 
-    return (
-        <ConnectionProvider endpoint={endpoint}>
-            <WalletProvider wallets={wallets}>
+    const Navbar = () => {
+        return (
+            <div className="navbar-div">
+                <div className="navbar-text">Xypher P2P</div>
+                <div className="navbar-routes">
+                    <span>Home</span>
+                    <span>My Listings</span>
+                </div>
                 <WalletModalProvider>
                     <WalletMultiButton />
                 </WalletModalProvider>
+            </div>
+        );
+    };
+
+    return (
+        <ConnectionProvider endpoint={endpoint}>
+            <WalletProvider wallets={wallets} autoConnect>
+                <Navbar />
                 {/* Rest of the code */}
             </WalletProvider>
         </ConnectionProvider>
