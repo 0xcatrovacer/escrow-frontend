@@ -111,6 +111,8 @@ function App() {
                                 <HomePage
                                     setPublicKey={setPublicKey}
                                     connection={newConnection}
+                                    program={web3Program}
+                                    provider={web3Provider}
                                 />
                             }
                         />
