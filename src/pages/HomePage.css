@@ -36,6 +36,7 @@
     flex-direction: column;
     max-width: 20vh;
     text-align: center;
+    cursor: pointer;
 }
 
 .user-nft-image {
@@ -53,4 +54,70 @@
     width: 100%;
     height: 80vh;
     border-radius: 2vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.ask-interface-head {
+    margin-left: 5vh;
+    margin-right: 5vh;
+    margin-top: 5vh;
+    margin-bottom: 3vh;
+    font-size: 3vh;
+    text-align: center;
+}
+
+.nft-ask-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.selected-nft-img {
+    width: 30vh;
+    border-radius: 4vh;
+}
+
+.nft-ask-name {
+    margin-top: 2vh;
+    font-size: 2.6vh;
+    font-weight: bold;
+}
+
+.nft-ask-form {
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 75%;
+    justify-content: space-between;
+}
+
+.price-input {
+    height: 5vh;
+    width: 13vw;
+    padding-left: 1vw;
+    font-size: 3vh;
+    background-color: #d2e3ff;
+    border-radius: 1vh;
+    border: 3px solid #3e88ff;
+}
+
+.ask-usdc {
+    font-size: 3vh;
+    font-weight: 500;
+}
+
+.create-listing-button {
+    height: 7vh;
+    margin-top: 2vh;
+    width: 15vw;
+    font-size: 2.8vh;
+    font-weight: 500;
+    border-radius: 1vh;
+    background-color: #6aa3ff;
+    border: 3px solid #0059e9;
+    cursor: pointer;
 }
