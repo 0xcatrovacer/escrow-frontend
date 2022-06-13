@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Metaplex } from "@metaplex-foundation/js-next";
-import { Connection } from "@solana/web3.js";
-import { useWallet } from "@solana/wallet-adapter-react";
 import {
     resolveToWalletAddress,
     getParsedNftAccountsByOwner,
 } from "@nfteyez/sol-rayz";
+import axios from "axios";
+import Nft from "./Nft";
 
 const tempUserNFTs = [
     {
@@ -31,13 +30,15 @@ const tempUserNFTs = [
 ];
 
 function HomeNfts({ setSelectedNft, publicKey, connection }) {
-    const [userNfts, setUserNfts] = useState([]);
+    const [userNfts, setUserNfts] = useState(null);
 
     const ueCallFn = async () => {
-        const publicAddress = await resolveToWalletAddress({
-            text: publicKey.toBase58(),
-            connection,
-        });
+        const publicAddress =
+            publicKey &&
+            (await resolveToWalletAddress({
+                text: publicKey.toBase58(),
+                connection,
+            }));
 
         const nfts = await getParsedNftAccountsByOwner({
             publicAddress,
@@ -60,17 +61,11 @@ function HomeNfts({ setSelectedNft, publicKey, connection }) {
             <div className="nfts-list">
                 {userNfts &&
                     userNfts.map((nft) => (
-                        <div
-                            key={nft.data.mint}
-                            className="each-user-nft"
-                            onClick={() => setSelectedNft(nft)}
-                        >
-                            <img
-                                src={nft.data.uri}
-                                className="user-nft-image"
-                            />
-                            <div className="nft-data-text">{nft.data.name}</div>
-                        </div>
+                        <Nft
+                            nft={nft}
+                            key={nft.mint}
+                            setSelectedNft={setSelectedNft}
+                        />
                     ))}
             </div>
         </div>
