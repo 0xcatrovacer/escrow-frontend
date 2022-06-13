@@ -83,8 +83,8 @@ function App() {
             <div className="navbar-div">
                 <div className="navbar-text">P2P NFTs</div>
                 <div className="navbar-routes">
-                    <span>Home</span>
-                    <span>My Listings</span>
+                    <span style={{ cursor: "pointer" }}>Home</span>
+                    <span style={{ cursor: "pointer" }}>My Listings</span>
                 </div>
                 <WalletModalProvider>
                     <WalletMultiButton />
