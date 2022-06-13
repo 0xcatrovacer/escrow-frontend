@@ -5,7 +5,7 @@ import HomeNfts from "../Components/HomeNfts";
 
 import "./HomePage.css";
 
-function HomePage({ setPublicKey, connection }) {
+function HomePage({ setPublicKey, connection, program, provider }) {
     const { publicKey } = useWallet();
 
     useEffect(() => {
@@ -20,7 +20,13 @@ function HomePage({ setPublicKey, connection }) {
                 publicKey={publicKey}
                 connection={connection}
             />
-            <AskInterface selectedNft={selectedNft} />
+            <AskInterface
+                selectedNft={selectedNft}
+                publicKey={publicKey}
+                connection={connection}
+                program={program}
+                provider={provider}
+            />
         </div>
     );
 }
