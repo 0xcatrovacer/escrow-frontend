@@ -5,8 +5,11 @@ function AskInterface({ selectedNft }) {
         return (
             <div className="nft-ask-inner">
                 <div className="nft-ask-data">
-                    <img src={selectedNft.img} className="selected-nft-img" />
-                    <div className="nft-ask-name">{selectedNft.name}</div>
+                    <img
+                        src={selectedNft.data.uri}
+                        className="selected-nft-img"
+                    />
+                    <div className="nft-ask-name">{selectedNft.data.name}</div>
                 </div>
                 <div className="nft-ask-form">
                     <input
