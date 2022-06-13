@@ -1,6 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Metaplex } from "@metaplex-foundation/js-next";
+import { Connection } from "@solana/web3.js";
+import { useWallet } from "@solana/wallet-adapter-react";
+import {
+    resolveToWalletAddress,
+    getParsedNftAccountsByOwner,
+} from "@nfteyez/sol-rayz";
 
-const userNFTs = [
+const tempUserNFTs = [
     {
         img: "https://www.arweave.net/PShUK1uSCVszk8XfY-hLaiXhoxT91_Qmsz_FvbKzWLo?ext=jpg",
         name: "Degen Ape #4269",
@@ -23,21 +30,48 @@ const userNFTs = [
     },
 ];
 
-function HomeNfts({ setSelectedNft }) {
+function HomeNfts({ setSelectedNft, publicKey, connection }) {
+    const [userNfts, setUserNfts] = useState([]);
+
+    const ueCallFn = async () => {
+        const publicAddress = await resolveToWalletAddress({
+            text: publicKey.toBase58(),
+            connection,
+        });
+
+        const nfts = await getParsedNftAccountsByOwner({
+            publicAddress,
+            connection,
+        });
+
+        setUserNfts(nfts);
+
+        console.log(nfts);
+    };
+
+    useEffect(() => {
+        ueCallFn();
+    }, [publicKey]);
+
     return (
         <div className="home-nfts">
             <div className="nft-content-head">Your NFTs</div>
 
             <div className="nfts-list">
-                {userNFTs.map((nft) => (
-                    <div
-                        className="each-user-nft"
-                        onClick={() => setSelectedNft(nft)}
-                    >
-                        <img src={nft.img} className="user-nft-image" />
-                        <div className="nft-data-text">{nft.name}</div>
-                    </div>
-                ))}
+                {userNfts &&
+                    userNfts.map((nft) => (
+                        <div
+                            key={nft.data.mint}
+                            className="each-user-nft"
+                            onClick={() => setSelectedNft(nft)}
+                        >
+                            <img
+                                src={nft.data.uri}
+                                className="user-nft-image"
+                            />
+                            <div className="nft-data-text">{nft.data.name}</div>
+                        </div>
+                    ))}
             </div>
         </div>
     );
