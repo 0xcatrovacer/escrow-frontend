@@ -1,0 +1,64 @@
+.buy-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.no-listing-found {
+    font-size: 5vh;
+    display: flex;
+}
+
+.no-listing-text {
+    margin-top: 10vh;
+}
+
+.buy-container {
+    display: flex;
+    flex-direction: column;
+    background-color: #97bfff;
+    width: 30vw;
+    margin-top: 6vh;
+    border-radius: 2vh;
+}
+
+.buy-nft-data {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.buy-image {
+    max-width: 20vw;
+    margin-top: 7vh;
+    border-radius: 2.5vh;
+    border: 4px solid black;
+}
+
+.buy-nft-name {
+    margin-top: 2vh;
+    font-size: 4vh;
+}
+
+.buy-ask-amt {
+    text-align: center;
+    margin-top: 4vh;
+    font-size: 3vh;
+}
+
+.buy-button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 5vh;
+    margin-bottom: 4vh;
+}
+
+.buy-button {
+    height: 7vh;
+    width: 16vw;
+    font-size: 3vh;
+    background-color: #5093ff;
+    border-radius: 1.5vh;
+    cursor: pointer;
+}
