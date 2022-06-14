@@ -57,6 +57,7 @@ function ListingsPage({ setPublicKey, connection, program, provider }) {
                             nft={nft}
                             listing={nftListings[index]}
                             connection={connection}
+                            program={program}
                             key={nft.mint}
                         />
                     ))}
