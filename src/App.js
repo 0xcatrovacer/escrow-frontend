@@ -8,7 +8,6 @@ import {
 } from "@solana/wallet-adapter-react-ui";
 import {
     ConnectionProvider,
-    useWallet,
     WalletProvider,
 } from "@solana/wallet-adapter-react";
 import {
@@ -20,7 +19,7 @@ import {
 } from "@solana/wallet-adapter-wallets";
 import { clusterApiUrl, Connection, PublicKey } from "@solana/web3.js";
 import { AnchorProvider, Program } from "@project-serum/anchor";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 
 import HomePage from "./pages/HomePage";
 import ListingsPage from "./pages/ListingsPage";
@@ -85,12 +84,23 @@ function App() {
     );
 
     const Navbar = () => {
+        const navigate = useNavigate();
         return (
             <div className="navbar-div">
                 <div className="navbar-text">P2P NFTs</div>
                 <div className="navbar-routes">
-                    <span style={{ cursor: "pointer" }}>Home</span>
-                    <span style={{ cursor: "pointer" }}>My Listings</span>
+                    <span
+                        style={{ cursor: "pointer" }}
+                        onClick={() => navigate("/")}
+                    >
+                        Home
+                    </span>
+                    <span
+                        style={{ cursor: "pointer" }}
+                        onClick={() => navigate("/listings")}
+                    >
+                        My Listings
+                    </span>
                 </div>
                 <WalletModalProvider>
                     <WalletMultiButton />
@@ -102,24 +112,41 @@ function App() {
     return (
         <ConnectionProvider endpoint={endpoint}>
             <WalletProvider wallets={wallets} autoConnect>
-                <Navbar />
                 <BrowserRouter>
                     <Routes>
                         <Route
                             path="/"
                             element={
-                                <HomePage
-                                    setPublicKey={setPublicKey}
-                                    connection={newConnection}
-                                    program={web3Program}
-                                    provider={web3Provider}
-                                />
+                                <div>
+                                    <Navbar />
+                                    <HomePage
+                                        setPublicKey={setPublicKey}
+                                        connection={newConnection}
+                                        program={web3Program}
+                                        provider={web3Provider}
+                                    />
+                                </div>
                             }
                         />
-                        <Route path="/listings" element={<ListingsPage />} />
+                        <Route
+                            path="/listings"
+                            element={
+                                <div>
+                                    <Navbar />
+                                    <ListingsPage
+                                        setPublicKey={setPublicKey}
+                                        connection={newConnection}
+                                        program={web3Program}
+                                        provider={web3Provider}
+                                    />
+                                </div>
+                            }
+                            connection={newConnection}
+                            program={web3Program}
+                            provider={web3Provider}
+                        />
                     </Routes>
                 </BrowserRouter>
-                {/* Rest of the code */}
             </WalletProvider>
         </ConnectionProvider>
     );
