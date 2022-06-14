@@ -15,35 +15,36 @@ function ListingsPage({ setPublicKey, connection, program, provider }) {
     const { publicKey } = useWallet();
 
     const getAllListings = async () => {
-        const listings = await program.account.escrowAccount.all([
-            {
-                memcmp: {
-                    offset: 8,
-                    bytes: publicKey.toBase58(),
+        if (program) {
+            const listings = await program.account.escrowAccount.all([
+                {
+                    memcmp: {
+                        offset: 8,
+                        bytes: publicKey.toBase58(),
+                    },
                 },
-            },
-        ]);
+            ]);
 
-        const parsedAccount = await getParsedAccountByMint({
-            mintAddress: listings[0].account.initializerNftMint.toBase58(),
-            connection,
-        });
+            const parsedAccount = await getParsedAccountByMint({
+                mintAddress: listings[0].account.initializerNftMint.toBase58(),
+                connection,
+            });
 
-        const nfts = await getParsedNftAccountsByOwner({
-            publicAddress: parsedAccount.account.data.parsed.info.owner,
-            connection,
-        });
+            const nfts = await getParsedNftAccountsByOwner({
+                publicAddress: parsedAccount.account.data.parsed.info.owner,
+                connection,
+            });
 
-        console.log(nfts);
+            console.log(nfts);
 
-        setListings(listings);
-        setParsedNfts(nfts);
+            setListings(listings);
+            setParsedNfts(nfts);
+        }
     };
-
     useEffect(() => {
         setPublicKey(publicKey);
         getAllListings();
-    }, []);
+    }, [publicKey]);
 
     return (
         <div>
@@ -52,13 +53,13 @@ function ListingsPage({ setPublicKey, connection, program, provider }) {
             )}
             <div className="all-listings">
                 {nftListings &&
-                    parsedNfts.map((nft, index) => (
+                    nftListings.map((listing) => (
                         <Listing
-                            nft={nft}
-                            listing={nftListings[index]}
+                            nfts={parsedNfts}
+                            listing={listing}
                             connection={connection}
                             program={program}
-                            key={nft.mint}
+                            key={listing.account.initializerNftMint.toBase58()}
                         />
                     ))}
             </div>
