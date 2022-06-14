@@ -5,7 +5,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { getAssociatedTokenAddress, TOKEN_PROGRAM_ID } from "@solana/spl-token";
 import { PublicKey } from "@solana/web3.js";
 
-function Listing({ nft, listing, program }) {
+function Listing({ nfts, listing, program }) {
     const [imageLink, setImageLink] = useState("");
     const [escrowAccount, setEscrowAccount] = useState(null);
 
@@ -14,11 +14,11 @@ function Listing({ nft, listing, program }) {
     const { publicKey } = useWallet();
 
     const callFn = async () => {
-        if (listing.account.initializerNftMint.toBase58() !== nft.mint) {
-            alert("Something Went wrong");
-        }
+        const nft = nfts.filter(
+            (nft) => listing.account.initializerNftMint.toBase58() == nft.mint
+        );
 
-        const img = await axios.get(nft.data.uri);
+        const img = await axios.get(nft[0].data.uri);
 
         setImageLink(img.data.image);
         setEscrowAccount(listing.publicKey);
@@ -64,10 +64,18 @@ function Listing({ nft, listing, program }) {
                 .signers([])
                 .rpc();
 
-            alert(`Listing for ${nft.data.name} cancelled`);
+            // alert(`Listing for ${nft.data.name} cancelled`);
         } catch (e) {
             console.log(e);
         }
+    };
+
+    const handleListingLink = () => {
+        navigator.clipboard.writeText(
+            `${
+                process.env.REACT_APP_PROD_LINK
+            }/listing/${listing.publicKey.toBase58()}`
+        );
     };
 
     return (
@@ -77,7 +85,7 @@ function Listing({ nft, listing, program }) {
                     <div className="listed-nft-image-container">
                         <img src={imageLink} className="listed-nft-image" />
                     </div>
-                    <div className="listed-nft-name">{nft.data.name}</div>
+                    <div className="listed-nft-name">{}</div>
                 </div>
                 <div className="listing-ask">
                     Asked:{" "}
@@ -86,7 +94,9 @@ function Listing({ nft, listing, program }) {
                     USDC
                 </div>
                 <div className="listing-buttons">
-                    <button className="copy-link">Copy Listing Link</button>
+                    <button className="copy-link" onClick={handleListingLink}>
+                        Copy Listing Link
+                    </button>
 
                     <button
                         className="cancel-listing"
