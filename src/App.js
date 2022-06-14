@@ -24,6 +24,7 @@ import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import ListingsPage from "./pages/ListingsPage";
 import idl from "./idls/idl.json";
+import BuyPage from "./pages/BuyPage";
 
 require("@solana/wallet-adapter-react-ui/styles.css");
 
@@ -144,6 +145,19 @@ function App() {
                             connection={newConnection}
                             program={web3Program}
                             provider={web3Provider}
+                        />
+                        <Route
+                            path="/listing/:listingKey"
+                            element={
+                                <div>
+                                    <Navbar />
+                                    <BuyPage
+                                        connection={newConnection}
+                                        program={web3Program}
+                                        provider={web3Provider}
+                                    />
+                                </div>
+                            }
                         />
                     </Routes>
                 </BrowserRouter>
