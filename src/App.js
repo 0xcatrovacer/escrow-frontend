@@ -28,10 +28,10 @@ import BuyPage from "./pages/BuyPage";
 
 require("@solana/wallet-adapter-react-ui/styles.css");
 
-const networkUrl = "https://api.devnet.solana.com";
+const networkUrl = "https://api.mainnet-beta.solana.com";
 
 const programID = new PublicKey(idl.metadata.address);
-const network = WalletAdapterNetwork.Devnet;
+const network = WalletAdapterNetwork.Mainnet;
 const opts = {
     preflightCommitment: "processed",
 };

@@ -9,11 +9,12 @@ function Listing({ nfts, listing, program }) {
     const [imageLink, setImageLink] = useState("");
     const [escrowAccount, setEscrowAccount] = useState(null);
 
-    console.log(listing);
-
     const { publicKey } = useWallet();
 
     const callFn = async () => {
+        console.log(listing);
+        console.log(nfts);
+
         const nft = nfts.filter(
             (nft) => listing.account.initializerNftMint.toBase58() == nft.mint
         );
